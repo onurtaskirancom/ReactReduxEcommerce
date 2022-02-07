@@ -1,4 +1,12 @@
-import * as firebase from "firebase"
+// import * as firebase from 'firebase'
+// import firebase from 'firebase/compat/app';
+// import 'firebase/compat/auth';
+
+import "firebase/auth"
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -16,9 +24,19 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// const app = initializeApp(firebaseConfig);
 
 
-// export
-export const auth = firebase.auth();
-export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+
+// // export
+// export const auth = firebase.auth();
+// export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+const db = firebaseApp.firestore();
+const auth = firebase.auth();
+const provider = new firebase.auth.GoogleAuthProvider();
+
+
+export { auth, provider };
+export default db;
