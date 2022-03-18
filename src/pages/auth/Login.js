@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { auth } from "../../firebase";
 import { toast } from "react-toastify";
 import { Button } from "antd";
-import { MailOutlined } from "@ant-design/icons";
+import { GoogleOutlined, MailOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
+import { GoogleAuthProvider } from "firebase/auth";
 
 const Login = ({ history }) => {
-  const [email, setEmail] = useState("onur@gmail.com");
-  const [password, setPassword] = useState("123456");
+  const [email, setEmail] = useState("teknolojibeyi24@gmail.com");
+  const [password, setPassword] = useState("4769130??");
   const [loading, setLoading] = useState(false);
 
   let dispatch = useDispatch();
@@ -35,6 +36,27 @@ const Login = ({ history }) => {
       toast.error(error.message);
       setLoading(false);
     }
+  };
+
+  const googleLogin = async () => {
+    auth
+      .signInWithPopup(GoogleAuthProvider)
+      .then(async (result) => {
+        const { user } = result;
+        const idTokenResult = await user.getIdTokenResult();
+        dispatch({
+          type: "LOGGED_IN_USER",
+          payload: {
+            email: user.email,
+            token: idTokenResult.token,
+          },
+        });
+        history.push("/");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.message);
+      });
   };
 
   const loginForm = () => (
@@ -80,8 +102,24 @@ const Login = ({ history }) => {
     <div className='container p-5'>
       <div className='row'>
         <div className='col-md-6 offset-md-3'>
-          <h4>Login</h4>
+          {loading ? (
+            <h4 className='text-danger'>Loading...</h4>
+          ) : (
+            <h4>Login</h4>
+          )}
           {loginForm()}
+
+          <Button
+            onClick={googleLogin}
+            type='danger'
+            className='mb-3'
+            block
+            shape='round'
+            icon={<GoogleOutlined />}
+            size='large'
+          >
+            Login with Google
+          </Button>
         </div>
       </div>
     </div>

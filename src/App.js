@@ -10,6 +10,7 @@ import Header from "./components/nav/Header";
 import RegisterComplete from "./pages/auth/RegisterComplete";
 
 import { auth } from "./firebase";
+
 import { useDispatch } from "react-redux";
 
 const App = () => {
