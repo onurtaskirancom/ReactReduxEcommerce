@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { Button } from "antd";
 import { GoogleOutlined, MailOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
-import { GoogleAuthProvider } from "firebase/auth";
+import { googleAuthProvider } from "../../firebase";
 
 const Login = ({ history }) => {
   const [email, setEmail] = useState("teknolojibeyi24@gmail.com");
@@ -40,7 +40,7 @@ const Login = ({ history }) => {
 
   const googleLogin = async () => {
     auth
-      .signInWithPopup(GoogleAuthProvider)
+      .signInWithPopup(googleAuthProvider)
       .then(async (result) => {
         const { user } = result;
         const idTokenResult = await user.getIdTokenResult();
