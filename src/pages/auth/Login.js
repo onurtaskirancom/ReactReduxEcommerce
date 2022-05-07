@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { auth } from "../../firebase";
 import { toast } from "react-toastify";
 import { Button } from "antd";
 import { GoogleOutlined, MailOutlined } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { googleAuthProvider } from "../../firebase";
 import {Link} from "react-router-dom"
 
@@ -11,6 +11,13 @@ const Login = ({ history }) => {
   const [email, setEmail] = useState("teknolojibeyi24@gmail.com");
   const [password, setPassword] = useState("4769130??");
   const [loading, setLoading] = useState(false);
+
+  const { user } = useSelector((state) => ({ ...state }));
+
+  useEffect(() => {
+    if (user && user.token) history.push("/");
+  }, [user]);
+
 
   let dispatch = useDispatch();
 
